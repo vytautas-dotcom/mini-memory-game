@@ -7,7 +7,6 @@ const message = document.getElementById("message");
 let playerId = localStorage.getItem("memoryPlayerId");
 let score = 4;
 let started = false;
-
 let currentNumber = "";
 
 function generateNumber(length) {
@@ -19,23 +18,32 @@ function generateNumber(length) {
 }
 
 async function startRound() {
+  if (!playerId) {
+    playerId = crypto.randomUUID();
+    localStorage.setItem("memoryPlayerId", playerId);
+  }
 
-if (!playerId) {
-  playerId = crypto.randomUUID();
-  localStorage.setItem("memoryPlayerId", playerId);
-}else if(!started){
-    score = await getScore(playerId);
+  if (!started) {
+    const savedScore = await getScore(playerId);
+
+    if (savedScore && savedScore >= 4) {
+      score = savedScore;
+    } else {
+      score = 4;
+    }
+
     started = true;
-}
+  }
 
   answerInput.value = "";
   answerInput.disabled = true;
   checkBtn.disabled = true;
   message.textContent = "";
 
+  levelEl.textContent = score;
+
   currentNumber = generateNumber(score);
   numberBox.textContent = currentNumber;
-  levelEl.textContent = score;
 
   setTimeout(() => {
     numberBox.textContent = "????";
@@ -53,11 +61,11 @@ async function getScore(playerId) {
 
     const data = await response.json();
 
-    console.log(data);
-    return data.score;
+    return Number(data.score) || 4;
 
   } catch (err) {
     console.error(err);
+    return 4;
   }
 }
 
@@ -87,6 +95,7 @@ checkBtn.addEventListener("click", () => {
     saveScore(score - 1);
 
     score = 4;
+    started = false;
 
     setTimeout(startRound, 3000);
   }
