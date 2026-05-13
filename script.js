@@ -5,13 +5,9 @@ const levelEl = document.getElementById("level");
 const message = document.getElementById("message");
 
 let playerId = localStorage.getItem("memoryPlayerId");
+let score = 4;
+let started = false;
 
-if (!playerId) {
-  playerId = crypto.randomUUID();
-  localStorage.setItem("memoryPlayerId", playerId);
-}
-
-let level = 4;
 let currentNumber = "";
 
 function generateNumber(length) {
@@ -22,15 +18,26 @@ function generateNumber(length) {
   return num;
 }
 
-function startRound() {
+async function startRound() {
+
+if (!playerId) {
+  playerId = crypto.randomUUID();
+  localStorage.setItem("memoryPlayerId", playerId);
+}else{
+  if(!started){
+    score = await getScore(playerId);
+    started = true;
+  }
+}
+
   answerInput.value = "";
   answerInput.disabled = true;
   checkBtn.disabled = true;
   message.textContent = "";
 
-  currentNumber = generateNumber(level);
+  currentNumber = generateNumber(score);
   numberBox.textContent = currentNumber;
-  levelEl.textContent = level;
+  levelEl.textContent = score;
 
   setTimeout(() => {
     numberBox.textContent = "????";
@@ -40,27 +47,21 @@ function startRound() {
   }, 2000);
 }
 
-// function saveScore(score) {
-//   fetch("https://script.google.com/macros/s/AKfycbyevsWJuFbYkFllVCVL-SVrTXKG2PPLoK2RcTHwE_KR0PB-LbywLkNbu8X-IfqoFf03/exec", {
-//     method: "POST",
-//     mode: "no-cors",
-//     body: JSON.stringify({
-//       id: playerId,
-//       score: score,
-//       date: new Date().toLocaleString()
-//     }),
-//     headers: {
-//       "Content-Type": "application/json"
-//     }
-//   })
-//   .then(res => res.text())
-//   .then(data => {
-//     console.log("Išsaugota:", data);
-//   })
-//   .catch(err => {
-//     console.error("Klaida:", err);
-//   });
-// }
+async function getScore(playerId) {
+  try {
+    const response = await fetch(
+      `https://script.google.com/macros/s/AKfycbwBiBOEe0lf7vboFCtUj-k-lm3Kn8BBV7eocOqYy12zPuPzzqOczyiAaeGVP4gbSfXf/exec?playerId=${playerId}`
+    );
+
+    const data = await response.json();
+
+    console.log(data);
+    return data.score;
+
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 function saveScore(score) {
   const formData = new FormData();
@@ -69,7 +70,7 @@ function saveScore(score) {
   formData.append("score", score);
   formData.append("date", new Date().toLocaleString());
 
-  fetch("https://script.google.com/macros/s/AKfycbzSio6V6dC5mfKF0v6KyI-YBFLvU09IXXrO1mSat-4GtT_8_9ScNnM4l8lCbJmXUrLf/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwBiBOEe0lf7vboFCtUj-k-lm3Kn8BBV7eocOqYy12zPuPzzqOczyiAaeGVP4gbSfXf/exec", {
     method: "POST",
     mode: "no-cors",
     body: formData
@@ -81,13 +82,13 @@ checkBtn.addEventListener("click", () => {
 
   if (answer === currentNumber) {
     message.textContent = "Teisingai";
-    level++;
+    score++;
     setTimeout(startRound, 1000);
   } else {
-    message.textContent = `Baigta. Rezultatas: ${level - 1}`;
-    saveScore(level - 1);
+    message.textContent = `Baigta. Rezultatas: ${score - 1}`;
+    saveScore(score - 1);
 
-    level = 4;
+    score = 4;
 
     setTimeout(startRound, 3000);
   }
