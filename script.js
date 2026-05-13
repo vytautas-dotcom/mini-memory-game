@@ -23,11 +23,9 @@ async function startRound() {
 if (!playerId) {
   playerId = crypto.randomUUID();
   localStorage.setItem("memoryPlayerId", playerId);
-}else{
-  if(!started){
+}else if(!started){
     score = await getScore(playerId);
     started = true;
-  }
 }
 
   answerInput.value = "";
