@@ -3,7 +3,12 @@ import {
   getFirestore,
   doc,
   getDoc,
-  setDoc
+  setDoc,
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -74,6 +79,32 @@ async function startRound() {
   }, 2000);
 }
 
+async function loadTop10() {
+  const topContainer = document.getElementById("top10");
+  topContainer.innerHTML = "";
+
+  const q = query(
+    collection(db, "players"),
+    orderBy("score", "desc"),
+    limit(10)
+  );
+
+  const querySnapshot = await getDocs(q);
+
+  let position = 1;
+
+  querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    const row = document.createElement("p");
+    row.textContent = `${position}. ${data.score} - ${new Date(data.updatedAt).toLocaleString()}`;
+
+    topContainer.appendChild(row);
+
+    position++;
+  });
+}
+
 // async function getScore(playerId) {
 //   try {
 //     const response = await fetch(
@@ -132,6 +163,7 @@ checkBtn.addEventListener("click", () => {
   } else {
     message.textContent = `Baigta. Rezultatas: ${score - 1}`;
     saveScore(score - 1);
+    setTimeout(loadTop10, 1000);
 
     score = 4;
     started = false;
@@ -140,4 +172,5 @@ checkBtn.addEventListener("click", () => {
   }
 });
 
+loadTop10();
 startRound();
