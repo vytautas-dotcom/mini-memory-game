@@ -43,3 +43,48 @@ button {
   font-size: 18px;
   font-weight: bold;
 }
+
+#top10 {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.top-row:hover {
+  transform: scale(1.02);
+}
+
+.top-place {
+  font-weight: bold;
+  width: 60px;
+}
+
+.top-score {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.gold {
+  background: linear-gradient(90deg,#ffd700,#fff3b0);
+}
+
+.silver {
+  background: linear-gradient(90deg,#d8d8d8,#f5f5f5);
+}
+
+.bronze {
+  background: linear-gradient(90deg,#cd7f32,#f1d2b6);
+}

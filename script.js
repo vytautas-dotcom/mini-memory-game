@@ -79,6 +79,32 @@ async function startRound() {
   }, 2000);
 }
 
+// async function loadTop10() {
+//   const topContainer = document.getElementById("top10");
+//   topContainer.innerHTML = "";
+
+//   const q = query(
+//     collection(db, "players"),
+//     orderBy("score", "desc"),
+//     limit(10)
+//   );
+
+//   const querySnapshot = await getDocs(q);
+
+//   let position = 1;
+
+//   querySnapshot.forEach((docSnap) => {
+//     const data = docSnap.data();
+
+//     const row = document.createElement("p");
+//     row.textContent = `${position}. ${data.score} - ${new Date(data.updatedAt).toLocaleString()}`;
+
+//     topContainer.appendChild(row);
+
+//     position++;
+//   });
+// }
+
 async function loadTop10() {
   const topContainer = document.getElementById("top10");
   topContainer.innerHTML = "";
@@ -96,8 +122,24 @@ async function loadTop10() {
   querySnapshot.forEach((docSnap) => {
     const data = docSnap.data();
 
-    const row = document.createElement("p");
-    row.textContent = `${position}. ${data.score} - ${new Date(data.updatedAt).toLocaleString()}`;
+    const row = document.createElement("div");
+    row.classList.add("top-row");
+
+    if (position === 1) row.classList.add("gold");
+    if (position === 2) row.classList.add("silver");
+    if (position === 3) row.classList.add("bronze");
+
+    let medal = position;
+
+    if (position === 1) medal = "🥇";
+    if (position === 2) medal = "🥈";
+    if (position === 3) medal = "🥉";
+
+    row.innerHTML = `
+      <p class="top-place">${medal}</p>
+      <p class="top-score">${data.score}</p>
+      <p class="top-date">${new Date(data.updatedAt).toLocaleString()}</p>
+    `;
 
     topContainer.appendChild(row);
 
