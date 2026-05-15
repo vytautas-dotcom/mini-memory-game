@@ -67,7 +67,7 @@ async function startRound() {
   numberBox.textContent = currentNumber;
 
   setTimeout(() => {
-    numberBox.textContent = "????";
+    numberBox.textContent = "*".repeat(score);
     answerInput.disabled = false;
     checkBtn.disabled = false;
     answerInput.focus();
