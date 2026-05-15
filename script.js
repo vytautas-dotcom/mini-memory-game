@@ -8,7 +8,7 @@ import {
   getDocs,
   query,
   orderBy,
-  limit
+  limit,
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -18,7 +18,7 @@ const firebaseConfig = {
   storageBucket: "minimemorygame-e244f.firebasestorage.app",
   messagingSenderId: "981391228420",
   appId: "1:981391228420:web:93020dc0d18502e6deff51",
-  measurementId: "G-GQH6T1RSPR"
+  measurementId: "G-GQH6T1RSPR",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -112,7 +112,7 @@ async function loadTop10() {
   const q = query(
     collection(db, "players"),
     orderBy("score", "desc"),
-    limit(10)
+    limit(10),
   );
 
   const querySnapshot = await getDocs(q);
@@ -138,13 +138,55 @@ async function loadTop10() {
     row.innerHTML = `
       <p class="top-place">${medal}</p>
       <p class="top-score">${data.score}</p>
-      <p class="top-date">${new Date(data.updatedAt).toLocaleString()}</p>
+      <p class="top-date">${new Intl.DateTimeFormat("lt-LT", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      }).format(new Date(data.updatedAt))}</p>
     `;
 
     topContainer.appendChild(row);
 
     position++;
   });
+}
+
+async function loadMyRank() {
+  const rankEl = document.getElementById("myRank");
+
+  const q = query(
+    collection(db, "players"),
+    orderBy("score", "desc")
+  );
+
+  const querySnapshot = await getDocs(q);
+
+  let position = 1;
+  let myPosition = null;
+
+  querySnapshot.forEach((docSnap) => {
+    if (docSnap.id === playerId) {
+      myPosition = position;
+    }
+    position++;
+  });
+
+  if (!myPosition) {
+    rankEl.textContent = "";
+    return;
+  }
+
+  if (myPosition === 1) {
+    rankEl.textContent = "🥇";
+  } else if (myPosition === 2) {
+    rankEl.textContent = "🥈";
+  } else if (myPosition === 3) {
+    rankEl.textContent = "🥉";
+  } else {
+    rankEl.textContent = `#${myPosition}`;
+  }
 }
 
 // async function getScore(playerId) {
@@ -191,7 +233,7 @@ async function getScore() {
 async function saveScore(score) {
   await setDoc(doc(db, "players", playerId), {
     score: score,
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
   });
 }
 
@@ -205,7 +247,10 @@ checkBtn.addEventListener("click", () => {
   } else {
     message.textContent = `Baigta. Rezultatas: ${score - 1}`;
     saveScore(score - 1);
-    setTimeout(loadTop10, 1000);
+    setTimeout(() => {
+  loadTop10();
+  loadMyRank();
+}, 1000);
 
     score = 4;
     started = false;
@@ -214,5 +259,6 @@ checkBtn.addEventListener("click", () => {
   }
 });
 
+loadMyRank();
 loadTop10();
 startRound();
