@@ -7,11 +7,18 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="game">
+    <div id="nicknameScreen">
+      <h1>Atminties žaidimas</h1>
+      <p>Įvesk savo vardą:</p>
+      <input id="nicknameInput" maxlength="12" placeholder="Pvz. Tomas" />
+      <button id="saveNameBtn">Pradėti</button>
+    </div>
+
+    <div id="gameScreen" style="display: none">
       <h1>
-  Atminties žaidimas
-  <span id="myRank"></span>
-</h1>
+        Atminties žaidimas
+        <span id="myRank"></span>
+      </h1>
 
       <p>Lygis: <span id="level">4</span></p>
 
