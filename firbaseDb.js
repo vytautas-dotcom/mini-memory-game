@@ -27,6 +27,7 @@ const db = getFirestore(app);
 export async function loadTop10(playerId) {
   const topContainer = document.getElementById("top10");
   topContainer.innerHTML = "";
+  let myPosition = undefined;
 
   const q = query(
     collection(db, "players"),
@@ -35,7 +36,7 @@ export async function loadTop10(playerId) {
   );
 
   const querySnapshot = await getDocs(q);
-  loadMyRank(querySnapshot);
+  myPosition = loadMyRank(querySnapshot, playerId);
 
   let position = 1;
 
@@ -64,7 +65,6 @@ export async function loadTop10(playerId) {
       <p class="top-place">${data.nickname}</p>
       <p class="top-score">${data.score}</p>
       <p class="top-date">${new Intl.DateTimeFormat("lt-LT", {
-        year: "numeric",
         month: "numeric",
         day: "numeric",
         hour: "numeric",
@@ -89,17 +89,20 @@ export async function loadTop10(playerId) {
 
     position++;
   });
+  return myPosition;
 }
 
-export async function loadMyRank(querySnapshot) {
+export async function loadMyRank(querySnapshot, playerId) {
   const rankEl = document.getElementById("myRank");
 
   let position = 1;
   let myPosition = null;
+  let myScore = null;
 
   querySnapshot.forEach((docSnap) => {
     if (docSnap.id === playerId) {
       myPosition = position;
+      myScore = docSnap.data().score;
     }
     position++;
   });
@@ -118,6 +121,7 @@ export async function loadMyRank(querySnapshot) {
   } else {
     rankEl.textContent = `#${myPosition}`;
   }
+  return myScore;
 }
 
 async function getScore(playerId) {
@@ -125,8 +129,9 @@ async function getScore(playerId) {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    return docSnap.data();
+    return docSnap.data().score;
   }
+  return undefined;
 }
 
 export async function saveScore(score, playerId, nickname) {

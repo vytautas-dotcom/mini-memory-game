@@ -19,19 +19,19 @@ let currentNumber = "";
 let nickname = undefined;
 
 async function init() {
-
+  let curretScore = undefined;
   if (!playerId) {
     nicknameScreen.style.display = "block";
     gameScreen.style.display = "none";
-  }else{
+  } else {
     nicknameScreen.style.display = "none";
     gameScreen.style.display = "block";
-    await loadTop10(playerId);
-
-    await startRound();
+    curretScore = await loadTop10(playerId);
+console.log("curretScore",curretScore);
+    await startRound(curretScore);
   }
 
-  if(nickname){
+  if (nickname) {
     nicknameScreen.style.display = "none";
     gameScreen.style.display = "block";
 
@@ -39,50 +39,30 @@ async function init() {
     localStorage.setItem("memoryPlayerId", playerId);
     localStorage.setItem("memoryPlayerNickname", nickname);
 
-    await startRound();
+    await startRound(curretScore);
   }
 }
 
-
-
-async function startRound() {
-  // if (!playerId) {
-  //   playerId = crypto.randomUUID();
-  //   localStorage.setItem("memoryPlayerId", playerId);
-  // }
-
-  // if (!started) {
-  //   const savedScore = await getScore(playerId)[0];
-  //   nickname = await getScore(playerId)[1];
-
-  //   if (savedScore && savedScore >= 4) {
-  //     score = savedScore;
-  //   } else {
-  //     score = 4;
-  //   }
-
-  //   started = true;
-  // }
+async function startRound(currentScore) {
+  
 
   answerInput.value = "";
   answerInput.disabled = true;
   checkBtn.disabled = true;
   message.textContent = "";
 
-  levelEl.textContent = score;
+  levelEl.textContent = currentScore !== undefined ? currentScore : score;
 
-  currentNumber = generateNumber(score);
+  currentNumber = generateNumber(currentScore !== undefined ? currentScore : score);
   numberBox.textContent = currentNumber;
 
   setTimeout(() => {
-    numberBox.textContent = "*".repeat(score);
+    numberBox.textContent = "*".repeat(currentScore !== undefined ? currentScore : score);
     answerInput.disabled = false;
     checkBtn.disabled = false;
     answerInput.focus();
   }, 2000);
 }
-
-
 
 checkBtn.addEventListener("click", () => {
   const answer = answerInput.value.trim();
@@ -98,7 +78,7 @@ checkBtn.addEventListener("click", () => {
       loadTop10();
     }, 1000);
 
-    score = 4;
+    score = score - 1 >= 4 ? score - 1 : 4;
     started = false;
 
     setTimeout(startRound, 3000);
@@ -116,8 +96,6 @@ saveNameBtn.addEventListener("click", async () => {
 
 await init();
 
-
-
 // async function getScore(playerId) {
 //   try {
 //     const response = await fetch(
@@ -133,7 +111,6 @@ await init();
 //     return 4;
 //   }
 // }
-
 
 // function saveScore(score) {
 //   const formData = new FormData();

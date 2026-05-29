@@ -7,14 +7,26 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div id="background">
+      <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+        <circle class="bubble b1" cx="200" cy="300" r="80" />
+        <circle class="bubble b2" cx="700" cy="500" r="120" />
+        <circle class="bubble b3" cx="500" cy="300" r="60" />
+        <circle class="bubble b4" cx="350" cy="600" r="90" />
+      </svg>
+    </div>
+
     <div id="nicknameScreen">
-      <h1>Atminties žaidimas</h1>
-      <p>Įvesk savo vardą:</p>
-      <input id="nicknameInput" maxlength="12" placeholder="Pvz. Tomas" />
+      <input id="nicknameInput" maxlength="12" placeholder="Vardas" />
       <button id="saveNameBtn">Pradėti</button>
     </div>
 
     <div id="gameScreen" style="display: none">
+      <div class="menu">
+        <div class="menu-item"><p><a href="myStatistics.html">Mano statistika</a></p></div>
+      <div class="menu-item"><p><a href="top10.html">TOP 10</a></p></div>
+      </div>
+      
       <h1>
         Atminties žaidimas
         <span id="myRank"></span>
@@ -35,8 +47,8 @@
 
       <p id="message"></p>
 
-      <div><p>TOP 10:</p></div>
-      <div id="top10"></div>
+      <!-- <div><p>TOP 10:</p></div>
+      <div id="top10"></div> -->
     </div>
 
     <script type="module" src="script.js"></script>
