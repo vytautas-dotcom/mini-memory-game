@@ -4,12 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Memory Numbers</title>
-    <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="style.css" />
+
+    <style>
+        body{
+      margin:0;
+      padding:40px;
+      background:#f3f5f9;
+      font-family:Arial;
+      display:flex;
+      justify-content:center;
+    }
+
+    .stats-card{
+      width:700px;
+      background:white;
+      border-radius:20px;
+      padding:30px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:30px;
+    }
+
+    .title h1{
+      margin:0;
+      font-size:32px;
+    }
+
+    .nickname{
+      color:#666;
+      font-size:20px;
+    }
+    </style>
   </head>
   <body>
 
-      <div><p>TOP 10:</p></div>
+    <div class="stats-card">
+
+    <div class="title">
+        <a href="/">Atgal</a>
+      <h1>Top 10</h1>
+      <div class="nickname" id="nickname">
+      </div>
+    </div>
+
       <div id="top10"></div>
+    </div>
 
     <script type="module" src="top10.js"></script>
   </body>

@@ -1,4 +1,4 @@
-import { loadTop10, loadMyRank, saveScore } from "./firbaseDb.js";
+import { saveScore, getScore } from "./firbaseDb.js";
 import { generateNumber } from "./utilities.js";
 
 const nicknameScreen = document.getElementById("nicknameScreen");
@@ -14,50 +14,49 @@ const message = document.getElementById("message");
 let playerId = localStorage.getItem("memoryPlayerId");
 let playerName = localStorage.getItem("memoryPlayerNickname");
 let score = 4;
-let started = false;
 let currentNumber = "";
-let nickname = undefined;
+let startDate = undefined;
+let startResult = undefined;
+let lastDate = undefined;
+let lastResult = undefined;
+let bestResult = undefined;
 
 async function init() {
-  let curretScore = undefined;
-  if (!playerId) {
+  let playerData = undefined;
+  if (!playerId || !playerName) {
     nicknameScreen.style.display = "block";
     gameScreen.style.display = "none";
   } else {
     nicknameScreen.style.display = "none";
     gameScreen.style.display = "block";
-    curretScore = await loadTop10(playerId);
-console.log("curretScore",curretScore);
-    await startRound(curretScore);
-  }
 
-  if (nickname) {
-    nicknameScreen.style.display = "none";
-    gameScreen.style.display = "block";
-
-    playerId = crypto.randomUUID();
-    localStorage.setItem("memoryPlayerId", playerId);
-    localStorage.setItem("memoryPlayerNickname", nickname);
-
-    await startRound(curretScore);
+    playerData = await getScore(playerId);
+    if(playerData){
+      startDate = playerData.startDate;
+      startResult = playerData.startResult;
+      lastDate = playerData.lastDate;
+      lastResult = playerData.lastResult;
+      bestResult = playerData.bestResult;
+      score = lastResult
+    }
+    
+    await startRound();
   }
 }
 
-async function startRound(currentScore) {
-  
-
+async function startRound() {
   answerInput.value = "";
   answerInput.disabled = true;
   checkBtn.disabled = true;
   message.textContent = "";
 
-  levelEl.textContent = currentScore !== undefined ? currentScore : score;
+  levelEl.textContent = score;
 
-  currentNumber = generateNumber(currentScore !== undefined ? currentScore : score);
+  currentNumber = generateNumber(score);
   numberBox.textContent = currentNumber;
 
   setTimeout(() => {
-    numberBox.textContent = "*".repeat(currentScore !== undefined ? currentScore : score);
+    numberBox.textContent = "_".repeat(score);
     answerInput.disabled = false;
     checkBtn.disabled = false;
     answerInput.focus();
@@ -73,13 +72,18 @@ checkBtn.addEventListener("click", () => {
     setTimeout(startRound, 1000);
   } else {
     message.textContent = `Baigta. Rezultatas: ${score - 1}`;
-    saveScore(score - 1, playerId, nickname);
+    let currentDate = new Date().toISOString();
+    saveScore(
+      startDate ? startDate : currentDate, 
+      startResult ? startResult : score - 1, 
+      currentDate,
+      score - 1,
+      bestResult && score < bestResult? bestResult : score - 1,
+      playerId,
+      playerName
+    );
     setTimeout(() => {
-      loadTop10();
     }, 1000);
-
-    score = score - 1 >= 4 ? score - 1 : 4;
-    started = false;
 
     setTimeout(startRound, 3000);
   }
@@ -89,39 +93,12 @@ saveNameBtn.addEventListener("click", async () => {
   const value = nicknameInput.value.trim();
 
   if (!value) return;
-  nickname = value;
+    playerId = crypto.randomUUID();
+    playerName = value;
+    localStorage.setItem("memoryPlayerId", playerId);
+    localStorage.setItem("memoryPlayerNickname", playerName);
 
   init();
 });
 
 await init();
-
-// async function getScore(playerId) {
-//   try {
-//     const response = await fetch(
-//       `https://script.google.com/macros/s/AKfycbwBiBOEe0lf7vboFCtUj-k-lm3Kn8BBV7eocOqYy12zPuPzzqOczyiAaeGVP4gbSfXf/exec?playerId=${playerId}`
-//     );
-
-//     const data = await response.json();
-
-//     return Number(data.score) || 4;
-
-//   } catch (err) {
-//     console.error(err);
-//     return 4;
-//   }
-// }
-
-// function saveScore(score) {
-//   const formData = new FormData();
-
-//   formData.append("id", playerId);
-//   formData.append("score", score);
-//   formData.append("date", new Date().toLocaleString());
-
-//   fetch("https://script.google.com/macros/s/AKfycbwBiBOEe0lf7vboFCtUj-k-lm3Kn8BBV7eocOqYy12zPuPzzqOczyiAaeGVP4gbSfXf/exec", {
-//     method: "POST",
-//     mode: "no-cors",
-//     body: formData
-//   });
-// }
