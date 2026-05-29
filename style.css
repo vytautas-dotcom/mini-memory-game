@@ -105,13 +105,61 @@ body {
   border: none;
   border-radius: 10px;
 
-  font-size: 16px;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
   cursor: pointer;
 
-  background: white;
-  color: black;
-
   box-sizing: border-box;
+
+  background:#ffdeb8;
+  color: rgb(70, 72, 121);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+#saveNameBtn:hover{
+      background: #f9d6ae;
+}
+
+.btnStyle{
+    width: 100%;
+    
+      padding: 14px;
+    
+      border: none;
+      border-radius: 10px;
+    
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      cursor: pointer;
+    
+      box-sizing: border-box;
+    
+      background: #ffdeb8;
+      color: rgb(70, 72, 121);
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.btnStyle:hover{
+      background: #f9d6ae;
+}
+
+.linkStyle{
+  text-decoration: none;
+  color: rgb(70, 72, 121);
+      /* padding: 14px;
+      
+      border: none;
+      border-radius: 10px;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      cursor: pointer;
+        
+      box-sizing: border-box;
+        
+      background: #ffdeb8;
+       */
 }
 
 #myRank {
@@ -184,9 +232,8 @@ button {
 }
 
 .menu-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  text-align: center;
+
   background: white;
   padding: 0 10px;
   border-radius: 10px;
@@ -195,7 +242,21 @@ button {
   transition: transform 0.2s;
   width: 50%;
   margin: 0 10px;
+      
+  border: none;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  cursor: pointer;
+                
+  box-sizing: border-box;
+             
+  color: rgb(70, 72, 121);
+
 }
+
+
+
+
 
 .top-row:hover {
   transform: scale(1.02);
