@@ -4,38 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-<!-- Basic SEO -->
-<meta name="description" content="Memory Numbers – interaktyvus atminties lavinimo žaidimas, skirtas didinti trumpalaikės atminties talpą per skaičių įsiminimo pratimus." />
-<meta name="keywords" content="memory game, atminties žaidimas, smegenų treniruotė, koncentracija, skaičių žaidimas, brain training" />
-<meta name="author" content="Tavo vardas arba komanda" />
+    <!-- Basic SEO -->
+    <meta
+      name="description"
+      content="Memory Numbers – interaktyvus atminties lavinimo žaidimas, skirtas didinti trumpalaikės atminties talpą per skaičių įsiminimo pratimus."
+    />
+    <meta
+      name="keywords"
+      content="memory game, atminties žaidimas, smegenų treniruotė, koncentracija, skaičių žaidimas, brain training"
+    />
+    <meta name="author" content="Tavo vardas arba komanda" />
 
-<!-- Page title (jau turi, bet palieku kontekstui) -->
-<title>Memory Numbers – Atminties lavinimo žaidimas</title>
+    <!-- Page title (jau turi, bet palieku kontekstui) -->
+    <title>Memory Numbers – Atminties lavinimo žaidimas</title>
 
-<!-- Open Graph (Facebook, Messenger, LinkedIn) -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Memory Numbers – Lavinki savo atmintį" />
-<meta property="og:description" content="Interaktyvus skaičių atminties žaidimas, skirtas lavinti koncentraciją ir didinti atminties talpą." />
-<meta property="og:url" content="https://matememo-mini-game.netlify.app" />
-<meta property="og:image" content="https://matememo-mini-game.netlify.app/preview.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
+    <!-- Open Graph (Facebook, Messenger, LinkedIn) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Memory Numbers – Lavinki savo atmintį" />
+    <meta
+      property="og:description"
+      content="Interaktyvus skaičių atminties žaidimas, skirtas lavinti koncentraciją ir didinti atminties talpą."
+    />
+    <meta property="og:url" content="https://matememo-mini-game.netlify.app" />
+    <meta
+      property="og:image"
+      content="https://matememo-mini-game.netlify.app/preview.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
-<!-- Twitter Card (YouTube / X / preview systems) -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Memory Numbers – Atminties žaidimas" />
-<meta name="twitter:description" content="Lavinki savo atmintį su interaktyviu skaičių įsiminimo žaidimu." />
-<meta name="twitter:image" content="https://matememo-mini-game.netlify.app/preview.png" />
+    <!-- Twitter Card (YouTube / X / preview systems) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Memory Numbers – Atminties žaidimas" />
+    <meta
+      name="twitter:description"
+      content="Lavinki savo atmintį su interaktyviu skaičių įsiminimo žaidimu."
+    />
+    <meta
+      name="twitter:image"
+      content="https://matememo-mini-game.netlify.app/preview.png"
+    />
 
-<!-- Mobile / UX -->
-<meta name="theme-color" content="#f75c09" />
+    <!-- Mobile / UX -->
+    <meta name="theme-color" content="#f75c09" />
 
-<link rel="icon" type="image/png" href="/favicon-96x96.png?v=20260529" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260529" />
-<link rel="shortcut icon" href="/favicon.ico?v=20260529" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260529" />
-<meta name="apple-mobile-web-app-title" content="matememo-mini-game" />
-<link rel="manifest" href="/site.webmanifest?v=20260529" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/favicon-96x96.png?v=20260529"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260529" />
+    <link rel="shortcut icon" href="/favicon.ico?v=20260529" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon.png?v=20260529"
+    />
+    <meta name="apple-mobile-web-app-title" content="matememo-mini-game" />
+    <link rel="manifest" href="/site.webmanifest?v=20260529" />
 
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -51,43 +78,45 @@
 
     <div id="nicknameScreen">
       <input id="nicknameInput" maxlength="12" placeholder="Vardas" />
-      <button 
-      id="saveNameBtn"
-      >Pradėti</button>
+      <button id="saveNameBtn">Eiti į žaidimą</button>
     </div>
 
     <div id="gameScreen" style="display: none">
       <div class="menu">
-        <div class="menu-item"><p><a class="linkStyle" href="myStatistics.html">Mano statistika</a></p></div>
-      <div class="menu-item"><p><a class="linkStyle" href="top10.html">TOP 10</a></p></div>
+        <div class="menu-item">
+          <p>
+            <a class="linkStyle" href="myStatistics.html">Mano statistika</a>
+          </p>
+        </div>
+        <div class="menu-item">
+          <p><a class="linkStyle" href="top10.html">TOP 10</a></p>
+        </div>
       </div>
-      
-      <h1>
-        Atminties žaidimas
-        <span id="myRank"></span>
-      </h1>
 
-      <p>Lygis: <span id="level">4</span></p>
+      <div id="gameStartedScreen">
+        <h1>
+          Atminties žaidimas
+          <span id="myRank"></span>
+        </h1>
 
-      <div id="numberBox" class="number-box"></div>
+        <canvas id="timeCanvas"></canvas>
 
-      <input
-        id="answerInput"
-        type="text"
-        placeholder="Įrašyk skaičius"
-        autocomplete="off"
-        style="border-radius: 10px;"
-      />
+        <p>Lygis: <span id="level"></span></p>
 
-      <button 
-      id="checkBtn" 
-      class="btnStyle"
-     >Tikrinti</button>
+        <div id="numberBox" class="number-box"></div>
 
-      <p style="height: 2rem;" id="message"></p>
+        <input
+          id="answerInput"
+          type="text"
+          placeholder="Įrašyk skaičius"
+          autocomplete="off"
+          style="border-radius: 10px"
+        />
 
-      <!-- <div><p>TOP 10:</p></div>
-      <div id="top10"></div> -->
+        <button id="checkBtn" class="btnStyle">PRADĖTI</button>
+
+        <p style="height: 2rem" id="message"></p>
+      </div>
     </div>
 
     <script type="module" src="script.js"></script>

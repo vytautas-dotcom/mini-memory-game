@@ -313,3 +313,12 @@ button {
 .flash-row {
   animation: pulseRow 1s ease 2;
 }
+
+#timeCanvas{
+  width:100%;
+  max-width:500px;
+  height:26px;
+  display:block;
+  margin-bottom:20px;
+  border-radius:20px;
+}
