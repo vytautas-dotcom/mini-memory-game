@@ -6,6 +6,8 @@ body {
   align-items: center;
   overflow: hidden;
   background: hsla(222, 47%, 77%, 0.247);
+  font-family: Calibri, 'Trebuchet MS', sans-serif;
+  letter-spacing: 0.5px;
 }
 
 #background {
