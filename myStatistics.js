@@ -12,7 +12,8 @@ const playerData = {
   bestResult: data.bestResult,
   lastResult: data.lastResult,
   startDate: data.startDate,
-  lastDate: data.lastDate
+  lastDate: data.lastDate,
+  bestDate: data.bestDate
 };
 
 // UI
@@ -39,3 +40,9 @@ document.getElementById("lastDate").textContent =
 
 document.getElementById("lastHour").textContent =
   playerData.lastDate.slice(11, 16);
+
+document.getElementById("bestDate").textContent =
+  playerData.bestDate.slice(0, 10);
+
+document.getElementById("bestHour").textContent =
+  playerData.bestDate.slice(11, 16);

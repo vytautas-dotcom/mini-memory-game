@@ -25,6 +25,7 @@ let startResult = undefined;
 let lastDate = undefined;
 let lastResult = undefined;
 let bestResult = undefined;
+let bestDate = undefined;
 
   answerInput.disabled = true;
 
@@ -54,6 +55,7 @@ async function init() {
       lastDate = playerData.lastDate;
       lastResult = playerData.lastResult;
       bestResult = playerData.bestResult;
+      bestDate = playerData.bestDate;
       score = lastResult;
     }
   }
@@ -90,10 +92,15 @@ checkBtn.addEventListener("click", () => {
         currentDate,
         score - 1,
         bestResult && score < bestResult ? bestResult : score - 1,
+        bestDate && score < bestResult ? bestDate : currentDate,
         playerId,
         playerName,
       );
+      checkBtn.textContent = "PRADĖTI";
+    gameStarted = false;
+    score--;
     }
+    
   }
 });
 

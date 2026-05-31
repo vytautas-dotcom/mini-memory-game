@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-            <link rel="stylesheet" href="style.css" />
+    <title>Bendra statistika</title>
+    <link rel="stylesheet" href="style.css" />
 
     <style>
       body {
@@ -39,17 +40,61 @@
         color: #666;
         font-size: 20px;
       }
+
+      .button-group {
+        display: flex;
+        gap: 12px;
+      }
+
+      .mode-btn {
+        text-decoration: none;
+
+        text-align: center;
+        font-size: 18px;
+        letter-spacing: 0.5px;
+        color: rgb(70, 72, 121);
+
+        background: white;
+        padding: 10px 16px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+        width: auto;
+        box-sizing: border-box;
+        cursor: pointer;
+      }
+
+      .mode-btn:hover {
+        background: rgba(203, 243, 255, 0.25);
+      }
+
+      .mode-btn.active {
+         background: rgba(203, 243, 255, 0.329);
+        padding: 10px 16px;
+        border-radius: 10px;
+        border: none;
+        /* box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08); */
+        width: auto;
+        box-sizing: border-box;
+        cursor: pointer;
+
+        transform: scale(1.05);
+      }
     </style>
   </head>
   <body>
     <div class="stats-card">
       <div class="title">
-        <a href="/">Atgal</a>
+        <a class="mode-btn" href="/">Atgal</a>
         <h1>Bendra statistika</h1>
         <div class="nickname" id="nickname"></div>
       </div>
-
-        <canvas id="canvas"></canvas>
+      <div class="button-group">
+        <button class="mode-btn active">Geriausi</button>
+        <button class="mode-btn">Pirmieji</button>
+        <button class="mode-btn">Paskutiniai</button>
+      </div>
+      <canvas id="canvas" style="margin-top: 5px;"></canvas>
     </div>
 
     <script type="module" src="statistics.js"></script>

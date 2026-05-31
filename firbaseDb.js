@@ -88,22 +88,49 @@ export async function loadTop10(playerId) {
   });
 }
 
-export async function getBestResults() {
-  let bestResults = [];
-  
-  const q = query(
-    collection(db, "players")
-  );
+export async function getFirstResults() {
+  let firstResults = [];
+
+  const q = query(collection(db, "players"));
 
   const querySnapshot = await getDocs(q);
 
+  querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    firstResults.push(data.startResult);
+  });
+  return firstResults;
+}
+
+export async function getLastResults() {
+  let lastResults = [];
+
+  const q = query(collection(db, "players"));
+
+  const querySnapshot = await getDocs(q);
 
   querySnapshot.forEach((docSnap) => {
     const data = docSnap.data();
-    
+
+    lastResults.push(data.lastResult);
+  });
+  return lastResults;
+}
+
+export async function getBestResults() {
+  let bestResults = [];
+
+  const q = query(collection(db, "players"));
+
+  const querySnapshot = await getDocs(q);
+
+  querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
     bestResults.push(data.bestResult);
-});
-return bestResults;
+  });
+  return bestResults;
 }
 
 export async function getScore(playerId) {
@@ -116,13 +143,23 @@ export async function getScore(playerId) {
   return undefined;
 }
 
-export async function saveScore(startDate, startResult, lastDate, lastResult, bestResult, playerId, nickname) {
+export async function saveScore(
+  startDate,
+  startResult,
+  lastDate,
+  lastResult,
+  bestResult,
+  bestDate,
+  playerId,
+  nickname,
+) {
   await setDoc(doc(db, "players", playerId), {
     startDate: startDate,
     startResult: startResult,
     lastDate: lastDate,
     lastResult: lastResult,
     bestResult: bestResult,
+    bestDate: bestDate,
     nickname: nickname,
   });
 }
