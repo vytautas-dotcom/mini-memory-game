@@ -30,19 +30,46 @@ document.getElementById("lastResult").textContent =
   playerData.lastResult;
 
 document.getElementById("startDate").textContent =
-  playerData.startDate.slice(0, 10);
+  `${new Intl.DateTimeFormat("lt-LT", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  }).format(new Date(playerData.startDate))
+  }`;
 
 document.getElementById("startHour").textContent =
-  playerData.startDate.slice(11, 16);
+  `${new Intl.DateTimeFormat("lt-LT", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(playerData.startDate))
+  }`;
 
 document.getElementById("lastDate").textContent =
-  playerData.lastDate.slice(0, 10);
+  `${new Intl.DateTimeFormat("lt-LT", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  }).format(new Date(playerData.lastDate))
+  }`;
 
 document.getElementById("lastHour").textContent =
-  playerData.lastDate.slice(11, 16);
+  `${new Intl.DateTimeFormat("lt-LT", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(playerData.lastDate))
+  }`;
 
 document.getElementById("bestDate").textContent =
-  playerData.bestDate.slice(0, 10);
+  `${new Intl.DateTimeFormat("lt-LT", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  }).format(new Date(playerData.bestDate))
+  }`;
 
 document.getElementById("bestHour").textContent =
-  playerData.bestDate.slice(11, 16);
+  `${new Intl.DateTimeFormat("lt-LT", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(playerData.bestDate))
+  }`;

@@ -12,7 +12,8 @@ const numberBox = document.getElementById("numberBox");
 const answerInput = document.getElementById("answerInput");
 const checkBtn = document.getElementById("checkBtn");
 const levelEl = document.getElementById("level");
-const message = document.getElementById("message");
+const message1 = document.getElementById("message1");
+const message2 = document.getElementById("message2");
 
 let playerId = localStorage.getItem("memoryPlayerId");
 let playerName = localStorage.getItem("memoryPlayerNickname");
@@ -27,7 +28,7 @@ let lastResult = undefined;
 let bestResult = undefined;
 let bestDate = undefined;
 
-  answerInput.disabled = true;
+answerInput.disabled = true;
 
 
 const canvas = document.getElementById("timeCanvas");
@@ -79,28 +80,30 @@ checkBtn.addEventListener("click", () => {
     const answer = answerInput.value.trim();
 
     if (answer === currentNumber) {
-      message.textContent = "Teisingai";
+      message1.textContent = "Teisingai";
       score++;
       let time = memorizingTime + (score - 4) * 500;
       startTimer(time, startRound);
     } else {
-      message.textContent = `Baigta. Rezultatas: ${score - 1}`;
+      message1.textContent = `Teisingas atsakymas buvo: ${currentNumber}.`;
+      message2.textContent = `Rezultatas: ${score - 1}`;
+
       let currentDate = new Date().toISOString();
       saveScore(
         startDate ? startDate : currentDate,
         startResult ? startResult : score - 1,
         currentDate,
         score - 1,
-        bestResult && score < bestResult ? bestResult : score - 1,
-        bestDate && score < bestResult ? bestDate : currentDate,
+        bestResult && score <= bestResult ? bestResult : score - 1,
+        bestDate && score <= bestResult ? bestDate : currentDate,
         playerId,
         playerName,
       );
       checkBtn.textContent = "PRADĖTI";
-    gameStarted = false;
-    score--;
+      gameStarted = false;
+      score--;
     }
-    
+
   }
 });
 
@@ -123,7 +126,8 @@ function startTimer(duration, onFinish) {
   answerInput.value = "";
   answerInput.disabled = true;
   checkBtn.disabled = true;
-  message.textContent = "";
+  message1.textContent = "";
+  message2.textContent = "";
   levelEl.textContent = score;
   currentNumber = generateNumber(score);
   numberBox.textContent = currentNumber;

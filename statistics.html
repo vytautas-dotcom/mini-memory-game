@@ -1,102 +1,127 @@
 <!doctype html>
 <html lang="lt">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Bendra statistika</title>
-    <link rel="stylesheet" href="style.css" />
 
-    <style>
-      body {
-        margin: 0;
-        padding: 40px;
-        background: #f3f5f9;
-        font-family: Arial;
-        display: flex;
-        justify-content: center;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bendra statistika</title>
+  <link rel="stylesheet" href="style.css" />
 
-      .stats-card {
-        /* width: 700px; */
-        background: white;
-        border-radius: 20px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      }
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 1rem;
+      background: #f3f5f9;
+      font-family: Arial;
+      display: flex;
+      justify-content: center;
+    }
 
-      .title {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 30px;
-      }
+    .stats-card {
+      /* width: 700px; */
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
 
-      .title h1 {
-        margin: 0;
-        font-size: 32px;
-      }
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      gap: 1rem;
+    }
 
-      .nickname {
-        color: #666;
-        font-size: 20px;
-      }
+    .title h1 {
+      margin: 0;
+      font-size: 32px;
+      text-align: center;
+    }
 
-      .button-group {
-        display: flex;
-        gap: 12px;
-      }
+    .nickname {
+      color: #666;
+      font-size: 20px;
+    }
 
-      .mode-btn {
-        text-decoration: none;
+    .button-group {
+      display: flex;
+      gap: 12px;
+    }
 
-        text-align: center;
-        font-size: 18px;
-        letter-spacing: 0.5px;
-        color: rgb(70, 72, 121);
+    .mode-btn {
+      text-decoration: none;
 
-        background: white;
-        padding: 10px 16px;
-        border-radius: 10px;
-        border: none;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-        width: auto;
-        box-sizing: border-box;
-        cursor: pointer;
-      }
+      text-align: center;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      color: rgb(70, 72, 121);
 
-      .mode-btn:hover {
-        background: rgba(203, 243, 255, 0.25);
-      }
+      background: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      width: auto;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
 
-      .mode-btn.active {
-         background: rgba(203, 243, 255, 0.329);
-        padding: 10px 16px;
-        border-radius: 10px;
-        border: none;
-        /* box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08); */
-        width: auto;
-        box-sizing: border-box;
-        cursor: pointer;
+    .mode-btn:hover {
+      background: rgba(203, 243, 255, 0.25);
+    }
 
-        transform: scale(1.05);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="stats-card">
-      <div class="title">
-        <a class="mode-btn" href="/">Atgal</a>
-        <h1>Bendra statistika</h1>
-        <div class="nickname" id="nickname"></div>
-      </div>
-      <div class="button-group">
-        <button class="mode-btn active">Geriausi</button>
-        <button class="mode-btn">Pirmieji</button>
-        <button class="mode-btn">Paskutiniai</button>
-      </div>
+    .mode-btn.active {
+      background: rgba(203, 243, 255, 0.329);
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      /* box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08); */
+      width: auto;
+      box-sizing: border-box;
+      cursor: pointer;
+
+      transform: scale(1.05);
+    }
+
+    .canvas-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .stat-label {
+      color: #777;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stats-card">
+    <div class="title">
+      <a class="mode-btn" href="/">Atgal</a>
+      <h1>Bendra statistika</h1>
+      <div class="nickname" id="nickname"></div>
+    </div>
+    <div class="button-group">
+      <button class="mode-btn active">Geriausi</button>
+      <button class="mode-btn">Pirmieji</button>
+      <button class="mode-btn">Paskutiniai</button>
+    </div>
+
+    <div class="canvas-wrapper">
       <canvas id="canvas" style="margin-top: 5px;"></canvas>
     </div>
 
-    <script type="module" src="statistics.js"></script>
-  </body>
+    <p id="stat-label-1" class="stat-label">Q1</p>
+    <p id="stat-label-2" class="stat-label">Q2</p>
+    <p id="stat-label-3" class="stat-label">Q3</p>
+
+  </div>
+
+  <script type="module" src="statistics.js"></script>
+</body>
+
 </html>

@@ -5,9 +5,15 @@ import {
 } from "./firbaseDb.js";
 
 const buttons = document.querySelectorAll(".mode-btn");
+
+const statLabel1 = document.getElementById("stat-label-1");
+const statLabel2 = document.getElementById("stat-label-2");
+const statLabel3 = document.getElementById("stat-label-3");
+
 const canvas = document.getElementById("canvas");
+
 const ctx = canvas.getContext("2d");
-const W_width = window.innerWidth * 0.5;
+const W_width = window.innerWidth * 0.9;
 const W_height = window.innerHeight * 0.3;
 canvas.width = W_width;
 canvas.height = W_height;
@@ -19,23 +25,30 @@ let Q2 = 0;
 let Q3 = 0;
 let data = await getBestResults();
 
+const bestOnes = "Geriausi";
+const firstOnes = "Pirmieji";
+const lastOnes = "Paskutiniai";
+
 buttons.forEach((button) => {
   button.addEventListener("click", async () => {
     buttons.forEach((btn) => btn.classList.remove("active"));
 
     button.classList.add("active");
-    if (button.textContent === "Geriausi") {
+    if (button.textContent === bestOnes) {
       data = await getBestResults();
       median(data);
       drawBoxChart(data);
-    } else if (button.textContent === "Pirmieji") {
+      statisticsInterpretation();
+    } else if (button.textContent === firstOnes) {
       data = await getFirstResults();
       median(data);
       drawBoxChart(data);
-    } else if (button.textContent === "Paskutiniai") {
+      statisticsInterpretation();
+    } else if (button.textContent === lastOnes) {
       data = await getLastResults();
       median(data);
       drawBoxChart(data);
+      statisticsInterpretation();
     }
   });
 });
@@ -73,7 +86,7 @@ function median(values) {
 function drawBoxChart(values) {
 
   values = [...values].sort((a, b) => a - b);
-  
+
   ctx.clearRect(0, 0, W_width, W_height);
   ctx.beginPath();
   ctx.fillStyle = "#fffaddc2";
@@ -151,11 +164,57 @@ function drawBoxChart(values) {
 
   ctx.fillText(Q2, median_x - 5, W_height - 20);
 
+  ctx.fillText("Q₁", begin_x - 5, W_height * 0.2 - 5);
+  ctx.fillText("Q₃", end_x - 5, W_height * 0.2 - 5);
+  ctx.fillText("Q₂", median_x - 5, W_height * 0.2 - 5);
+
   ctx.fillStyle = "#e254be96";
   ctx.rect(begin_x, W_height * 0.2, end_x - begin_x, W_height * 0.4);
   ctx.fill();
   ctx.stroke();
 }
 
+function statisticsInterpretation() {
+  const range = data[data.length - 1] - data[0];
+  const iqr = Q3 - Q1;
+  const lowerWhisker = Q1 - data[0];
+  const upperWhisker = data[data.length - 1] - Q3;
+
+  const boxRatio = iqr / range;
+
+  if (boxRatio < 0.25) {
+    statLabel1.innerHTML = 'Dauguma žaidėjų pasiekė panašius rezultatus.';
+  } else if (boxRatio < 0.5) {
+    statLabel1.innerHTML = 'Žaidėjų rezultatai pasižymi vidutine sklaida.';
+  } else {
+    statLabel1.innerHTML = 'Žaidėjų rezultatai labai įvairūs.';
+  }
+
+  const lowerRatio = lowerWhisker / range;
+  const upperRatio = upperWhisker / range;
+
+  if (upperRatio > lowerRatio * 1.5) {
+    statLabel2.innerHTML = 'Yra daugiau itin aukštų rezultatų.';
+  }
+  if (lowerRatio > upperRatio * 1.5) {
+    statLabel2.innerHTML = 'Yra daugiau itin žemų rezultatų.';
+  }
+  if (Math.abs(lowerRatio - upperRatio) < 0.1) {
+    statLabel2.innerHTML = 'Rezultatų pasiskirstymas gan simetriškas.';
+  }
+
+  const medianPosition = (Q2 - Q1) / iqr;
+
+  if (medianPosition === 0.5) {
+    statLabel3.innerHTML = 'Mediana yra per vidurį.';
+  } else if (medianPosition < 0.4) {
+    statLabel3.innerHTML = 'Mediana yra arčiau pirmojo kvartilio - aukštesnių rezultatų sklaida didesnė.';
+  } else if (medianPosition > 0.6) {
+    statLabel3.innerHTML = 'Mediana yra arčiau trečiojo kvartilio - žemesnių rezultatų sklaida didesnė.';
+  }
+
+}
+
 median(data);
 drawBoxChart(data);
+statisticsInterpretation();

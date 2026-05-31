@@ -59,14 +59,15 @@ export async function loadTop10(playerId) {
 
     row.innerHTML = `
       <p class="top-place">${medal}</p>
+      <p class="top-nickname">${data.nickname}</p>
       <p class="top-score">${data.bestResult}</p>
       <p class="top-date">${new Intl.DateTimeFormat("lt-LT", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-      }).format(new Date(data.lastDate))}</p>
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    }).format(new Date(data.lastDate))}</p>
     `;
 
     topContainer.appendChild(row);
