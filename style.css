@@ -147,22 +147,7 @@ body {
       background: #f9d6ae;
 }
 
-.linkStyle{
-  text-decoration: none;
-  color: rgb(70, 72, 121);
-      /* padding: 14px;
-      
-      border: none;
-      border-radius: 10px;
-      letter-spacing: 0.5px;
-      font-weight: 600;
-      cursor: pointer;
-        
-      box-sizing: border-box;
-        
-      background: #ffdeb8;
-       */
-}
+
 
 #myRank {
   display: inline-block;
@@ -211,93 +196,125 @@ button {
 }
 
 #top10 {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.5rem;
 }
 
 .top-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   background: white;
-  padding: 0 10px;
+  padding: 0 1rem;
   border-radius: 10px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-  font-size: 18px;
-  transition: transform 0.2s;
+  font-size: 1.2rem;
 }
+.top-row:hover {
+  transform: scale(1.02);
+}
+
 .menu{
   display: flex;
   width: 100%;
 }
 
-.menu-item {
+.link-style {
+  text-decoration: none; 
   text-align: center;
-
-  background: white;
-  padding: 0 10px;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
   font-size: 18px;
-  transition: transform 0.2s;
-  width: 50%;
-  margin: 0 10px;
-      
-  border: none;
   letter-spacing: 0.5px;
-  font-weight: 600;
-  cursor: pointer;
-                
-  box-sizing: border-box;
-             
   color: rgb(70, 72, 121);
-
+    
+  background: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  width: auto;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
+.menu-item {
+  text-decoration: none;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: rgb(70, 72, 121);
 
+  box-sizing: border-box;
+  cursor: pointer;
+  background: white;
+  padding: 10px;
+  margin: 0 10px;
+  width: 50%;
 
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-.top-row:hover {
-  transform: scale(1.02);
+.menu-item:hover {
+  background: rgba(252, 247, 247, 0.877);
 }
 
 .top-place {
-  font-weight: bold;
-  width: 60px;
+  color: grey;
+  width: 30px;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .top-score {
-  font-size: 20px;
+  font-size: 1.5rem;
   font-weight: bold;
+  color: grey;
+}
+
+.top-date {
+  color: grey;
 }
 
 .gold {
-  background: linear-gradient(90deg, #ffd700, #fff3b0);
+  background: linear-gradient(360deg, #ffd9003d, #fff3b021 50%);
 }
 
 .silver {
-  background: linear-gradient(90deg, #d8d8d8, #f5f5f5);
+  background: linear-gradient(360deg, #d8d8d88e, #f5f5f566 50%);
 }
 
 .bronze {
-  background: linear-gradient(90deg, #cd7f32, #f1d2b6);
+  background: linear-gradient(360deg, #cd803263, #f1d1b628 50%);
 }
 
 .my-row {
-  border: 2px solid #4caf50;
   transform: scale(1.03);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
 .my-row .top-score {
   font-weight: 900;
   font-size: 22px;
+  color: black;
 }
 
 .my-row .top-place {
-  font-weight: 900;
+  color: black;
+}
+
+.my-row .top-date {
+  color: black;
 }
 
 @keyframes pulseRow {
