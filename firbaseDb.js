@@ -88,6 +88,24 @@ export async function loadTop10(playerId) {
   });
 }
 
+export async function getBestResults() {
+  let bestResults = [];
+  
+  const q = query(
+    collection(db, "players")
+  );
+
+  const querySnapshot = await getDocs(q);
+
+
+  querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+    
+    bestResults.push(data.bestResult);
+});
+return bestResults;
+}
+
 export async function getScore(playerId) {
   const docRef = doc(db, "players", playerId);
   const docSnap = await getDoc(docRef);

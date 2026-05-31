@@ -121,20 +121,19 @@ function startTimer(duration, onFinish) {
   currentNumber = generateNumber(score);
   numberBox.textContent = currentNumber;
 
-  let red = 76;
-  let green = 175;
-  let blue = 80;
-
+  let red = 156;
+  let green = 248;
+  let blue = 159;
   function animate(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "#333";
+    ctx.fillStyle = "rgba(51, 51, 51, 0.25)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    red += 0.5;
+    red += 0.8;
     green -= 0.5;
     blue -= 0.5;
     ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
