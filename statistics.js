@@ -11,7 +11,6 @@ const statLabel2 = document.getElementById("stat-label-2");
 const statLabel3 = document.getElementById("stat-label-3");
 
 const canvas = document.getElementById("canvas");
-
 const ctx = canvas.getContext("2d");
 const W_width = window.innerWidth * 0.9;
 const W_height = window.innerHeight * 0.3;
@@ -19,6 +18,15 @@ canvas.width = W_width;
 canvas.height = W_height;
 canvas.style.width = `${W_width}px`;
 canvas.style.height = `${W_height}px`;
+
+const canvas2 = document.getElementById("canvas2");
+const ctx2 = canvas2.getContext("2d");
+const W_width2 = window.innerWidth * 0.9;
+const W_height2 = window.innerHeight * 0.5;
+canvas2.width = W_width2;
+canvas2.height = W_height2;
+canvas2.style.width = `${W_width2}px`;
+canvas2.style.height = `${W_height2}px`;
 
 let Q1 = 0;
 let Q2 = 0;
@@ -39,20 +47,22 @@ buttons.forEach((button) => {
       median(data);
       drawBoxChart(data);
       statisticsInterpretation();
+      drawColumnChart(data);
     } else if (button.textContent === firstOnes) {
       data = await getFirstResults();
       median(data);
       drawBoxChart(data);
       statisticsInterpretation();
+      drawColumnChart(data);
     } else if (button.textContent === lastOnes) {
       data = await getLastResults();
       median(data);
       drawBoxChart(data);
       statisticsInterpretation();
+      drawColumnChart(data);
     }
   });
 });
-
 
 function median(values) {
   if (values.length === 0) {
@@ -84,7 +94,6 @@ function median(values) {
 }
 
 function drawBoxChart(values) {
-
   values = [...values].sort((a, b) => a - b);
 
   ctx.clearRect(0, 0, W_width, W_height);
@@ -183,38 +192,125 @@ function statisticsInterpretation() {
   const boxRatio = iqr / range;
 
   if (boxRatio < 0.25) {
-    statLabel1.innerHTML = 'Dauguma žaidėjų pasiekė panašius rezultatus.';
+    statLabel1.innerHTML = "Dauguma žaidėjų pasiekė panašius rezultatus.";
   } else if (boxRatio < 0.5) {
-    statLabel1.innerHTML = 'Žaidėjų rezultatai pasižymi vidutine sklaida.';
+    statLabel1.innerHTML = "Žaidėjų rezultatai pasižymi vidutine sklaida.";
   } else {
-    statLabel1.innerHTML = 'Žaidėjų rezultatai labai įvairūs.';
+    statLabel1.innerHTML = "Žaidėjų rezultatai labai įvairūs.";
   }
 
   const lowerRatio = lowerWhisker / range;
   const upperRatio = upperWhisker / range;
 
   if (upperRatio > lowerRatio * 1.5) {
-    statLabel2.innerHTML = 'Yra daugiau itin aukštų rezultatų.';
+    statLabel2.innerHTML = "Yra daugiau itin aukštų rezultatų.";
   }
   if (lowerRatio > upperRatio * 1.5) {
-    statLabel2.innerHTML = 'Yra daugiau itin žemų rezultatų.';
+    statLabel2.innerHTML = "Yra daugiau itin žemų rezultatų.";
   }
   if (Math.abs(lowerRatio - upperRatio) < 0.1) {
-    statLabel2.innerHTML = 'Rezultatų pasiskirstymas gan simetriškas.';
+    statLabel2.innerHTML = "Rezultatų pasiskirstymas gan simetriškas.";
   }
 
   const medianPosition = (Q2 - Q1) / iqr;
 
   if (medianPosition === 0.5) {
-    statLabel3.innerHTML = 'Mediana yra per vidurį.';
+    statLabel3.innerHTML = "Mediana yra per vidurį.";
   } else if (medianPosition < 0.4) {
-    statLabel3.innerHTML = 'Mediana yra arčiau pirmojo kvartilio - aukštesnių rezultatų sklaida didesnė.';
+    statLabel3.innerHTML =
+      "Mediana yra arčiau pirmojo kvartilio - aukštesnių rezultatų sklaida didesnė.";
   } else if (medianPosition > 0.6) {
-    statLabel3.innerHTML = 'Mediana yra arčiau trečiojo kvartilio - žemesnių rezultatų sklaida didesnė.';
+    statLabel3.innerHTML =
+      "Mediana yra arčiau trečiojo kvartilio - žemesnių rezultatų sklaida didesnė.";
+  }
+}
+
+function drawColumnChart(values) {
+  let counts = {};
+  let frequences = {};
+  let maxFrequency = 0;
+  values = [...values].sort((a, b) => a - b);
+
+  for (let i = 0; i < values.length; i++) {
+    let num = values[i];
+
+    if (counts[num]) {
+      counts[num]++;
+    } else {
+      counts[num] = 1;
+    }
   }
 
+  for (const [key, value] of Object.entries(counts)) {
+    let frequency = value / values.length;
+    frequences[key] = frequency;
+
+    if (maxFrequency < frequency) maxFrequency = frequency;
+  }
+
+  ctx2.clearRect(0, 0, W_width2, W_height2);
+  ctx2.beginPath();
+  ctx2.fillStyle = "#fffaddc2";
+  ctx2.strokeStyle = "#fffadd";
+  ctx2.rect(0, 0, W_width2, W_height2 - 1);
+  ctx2.fill();
+  ctx2.stroke();
+
+  ctx2.strokeStyle = "#4e4e4e";
+
+  ctx2.beginPath();
+  ctx2.moveTo(40, W_height2 - 40);
+  ctx2.lineTo(W_width2 - 40, W_height2 - 40);
+  ctx2.stroke();
+
+  ctx2.beginPath();
+  ctx2.moveTo(45, W_height2 * 0.15);
+  ctx2.lineTo(45, W_height2 - 35);
+  ctx2.stroke();
+
+  ctx2.fillStyle = "blue";
+    ctx2.font = "14px Arial";
+    ctx2.fillText("Santykinis", 10, W_height2 * 0.08);
+    ctx2.fillText("dažnis", 10, W_height2 * 0.13);
+    ctx2.fillText("Rezultatas", W_width2 - 70, W_height2 - 20);
+
+  const actualWidth = W_width2 - 145;
+  const step = actualWidth / Object.keys(counts).length;
+
+  let begin_x = 45;
+
+  Object.entries(counts).forEach(([key, value], index) => {
+    ctx2.beginPath();
+    ctx2.moveTo(begin_x + 0.5 * step + index * step, W_height2 - 45);
+    ctx2.lineTo(begin_x + 0.5 * step + index * step, W_height2 - 35);
+    ctx2.stroke();
+
+    ctx2.fillStyle = "blue";
+    ctx2.font = "14px Arial";
+    ctx2.fillText(key, begin_x + 0.5 * step + index * step - 5, W_height2 - 20);
+
+    let a = 0.2 * W_height2;
+    let b = W_height2 - 40;
+    let h = b - a;
+    let c = (frequences[key] * h) / maxFrequency;
+    let d = h - c;
+
+    ctx2.fillStyle = "#e254be96";
+    ctx2.rect(begin_x + index * step, a + d, step, c);
+    ctx2.fill();
+    ctx2.stroke();
+
+    ctx2.fillStyle = "blue";
+    ctx2.font = "14px Arial";
+    ctx2.fillText(Number.parseFloat(frequences[key]).toFixed(3), 0, a + d);
+
+    ctx2.beginPath();
+    ctx2.moveTo(40, a + d);
+    ctx2.lineTo(50, a + d);
+  });
 }
 
 median(data);
 drawBoxChart(data);
 statisticsInterpretation();
+drawColumnChart(data);
