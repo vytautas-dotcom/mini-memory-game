@@ -1,5 +1,5 @@
 import { saveScore, getScore } from "./firbaseDb.js";
-import { generateNumber } from "./utilities.js";
+import { generateNumber, setLanguage } from "./utilities.js";
 
 const nicknameScreen = document.getElementById("nicknameScreen");
 const nicknameInput = document.getElementById("nicknameInput");
@@ -160,4 +160,23 @@ function startTimer(duration, onFinish) {
   requestAnimationFrame(animate);
 }
 
+document
+  .getElementById("ltBtn")
+  .addEventListener("click", () => setLanguage("lt"));
+
+document
+  .getElementById("enBtn")
+  .addEventListener("click", () => setLanguage("en"));
+
+const browserLanguage =
+  navigator.language.startsWith("lt")
+    ? "lt"
+    : "en";
+
+const language =
+  localStorage.getItem("language")
+  || browserLanguage;
+
+setLanguage(language);
+  
 await init();

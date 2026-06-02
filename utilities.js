@@ -5,3 +5,26 @@ export function generateNumber(length) {
   }
   return num;
 }
+
+export async function setLanguage(lang) {
+
+  const response =
+    await fetch(`assets/${lang}.json`);
+
+  const translations =
+    await response.json();
+
+  document
+    .querySelectorAll("[data-i18n]")
+    .forEach(el => {
+
+      const key = el.dataset.i18n;
+
+      if (translations[key]) {
+        el.textContent = translations[key];
+      }
+
+    });
+
+  localStorage.setItem("language", lang);
+}
