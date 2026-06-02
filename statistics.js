@@ -28,6 +28,15 @@ canvas2.height = W_height2;
 canvas2.style.width = `${W_width2}px`;
 canvas2.style.height = `${W_height2}px`;
 
+const canvas3 = document.getElementById("canvas3");
+const ctx3 = canvas3.getContext("2d");
+const W_width3 = window.innerWidth * 0.8;
+const W_height3 = window.innerHeight * 0.5;
+canvas3.width = W_width3;
+canvas3.height = W_height3;
+canvas3.style.width = `${W_width3}px`;
+canvas3.style.height = `${W_height3}px`;
+
 let Q1 = 0;
 let Q2 = 0;
 let Q3 = 0;
@@ -48,18 +57,21 @@ buttons.forEach((button) => {
       drawBoxChart(data);
       statisticsInterpretation();
       drawColumnChart(data);
+      drawComulatedFrequenciesChart(data);
     } else if (button.textContent === firstOnes) {
       data = await getFirstResults();
       median(data);
       drawBoxChart(data);
       statisticsInterpretation();
       drawColumnChart(data);
+      drawComulatedFrequenciesChart(data);
     } else if (button.textContent === lastOnes) {
       data = await getLastResults();
       median(data);
       drawBoxChart(data);
       statisticsInterpretation();
       drawColumnChart(data);
+      drawComulatedFrequenciesChart(data);
     }
   });
 });
@@ -270,8 +282,8 @@ function drawColumnChart(values) {
 
   ctx2.fillStyle = "blue";
   ctx2.font = "14px Arial";
-  ctx2.fillText("Santykinis", 10, W_height2 * 0.08);
-  ctx2.fillText("dažnis", 10, W_height2 * 0.13);
+  ctx2.fillText("Santykinis", 0, W_height2 * 0.08);
+  ctx2.fillText("dažnis", 0, W_height2 * 0.13);
   ctx2.fillText("Rezultatas", W_width2 - 75, W_height2 - 20);
 
   const actualWidth = W_width2 - 145;
@@ -307,10 +319,128 @@ function drawColumnChart(values) {
     ctx2.beginPath();
     ctx2.moveTo(40, a + d);
     ctx2.lineTo(50, a + d);
+    ctx2.stroke();
   });
+}
+
+function drawComulatedFrequenciesChart(values) {
+  let counts = {};
+  let frequences = {};
+  let maxFrequency = 0;
+  let comulatedFrequancy = values.length;
+  values = [...values].sort((a, b) => b - a);
+
+  for (let i = 0; i < values.length; i++) {
+    let num = values[i];
+
+    if (counts[num]) {
+      counts[num]++;
+    } else {
+      counts[num] = 1;
+    }
+  }
+  console.log("counts", counts);
+  for (const [key, value] of Object.entries(counts)) {
+    let frequency = value / values.length;
+    frequences[key] = frequency;
+
+    if (maxFrequency < frequency) maxFrequency = frequency;
+  }
+
+  ctx3.clearRect(0, 0, W_width2, W_height2);
+  ctx3.beginPath();
+  ctx3.fillStyle = "#fffaddc2";
+  ctx3.strokeStyle = "#fffadd";
+  ctx3.rect(0, 0, W_width3, W_height3 - 1);
+  ctx3.fill();
+  ctx3.stroke();
+
+  ctx3.strokeStyle = "#4e4e4e";
+
+  ctx3.beginPath();
+  ctx3.moveTo(40, W_height3 - 40);
+  ctx3.lineTo(W_width3 - 40, W_height3 - 40);
+  ctx3.stroke();
+
+  ctx3.beginPath();
+  ctx3.moveTo(45, W_height3 * 0.15);
+  ctx3.lineTo(45, W_height3 - 35);
+  ctx3.stroke();
+
+  ctx3.fillStyle = "blue";
+  ctx3.font = "14px Arial";
+  ctx3.fillText("Sukauptasis", 0, W_height3 * 0.08);
+  ctx3.fillText("dažnis", 0, W_height3 * 0.13);
+  ctx3.fillText("Rezultatas", W_width3 - 75, W_height3 - 20);
+
+  const actualWidth = W_width3 - 145;
+  const step = actualWidth / Object.keys(counts).length;
+
+  let begin_x = 45;
+  let prev_x = 0;
+  let prev_y = 0;
+
+  Object.entries(counts)
+    .reverse()
+    .forEach(([key, value], index) => {
+      ctx3.beginPath();
+      ctx3.moveTo(begin_x + 0.5 * step + index * step, W_height3 - 45);
+      ctx3.lineTo(begin_x + 0.5 * step + index * step, W_height3 - 35);
+      ctx3.stroke();
+
+      ctx3.fillStyle = "blue";
+      ctx3.font = "14px Arial";
+      ctx3.fillText(
+        key,
+        W_width3 - 100 - 0.5 * step - index * step - 5,
+        W_height3 - 20,
+      );
+
+      let a = 0.2 * W_height3;
+      let b = W_height3 - 40;
+      let h = b - a;
+      let c = (comulatedFrequancy * h) / values.length;
+      let d = h - c;
+
+      ctx3.beginPath();
+      ctx3.fillStyle = "#e254be96";
+      ctx3.arc(
+        W_width3 - 100 - index * step - 0.5 * step,
+        a + d,
+        4,
+        0,
+        2 * Math.PI,
+      );
+      ctx3.fill();
+      ctx3.stroke();
+
+      if(comulatedFrequancy < values.length && comulatedFrequancy > 0){
+        ctx3.beginPath();
+        ctx3.strokeStyle = "#e254be96";
+        ctx3.lineWidth = 3;
+        ctx3.moveTo(W_width3 - 100 - index * step - 0.5 * step, a + d);
+        ctx3.lineTo(prev_x, prev_y);
+        ctx3.stroke();
+      }
+      
+
+      ctx3.fillStyle = "blue";
+      ctx3.font = "14px Arial";
+      ctx3.fillText(comulatedFrequancy, 0, a + d);
+
+      ctx3.beginPath();
+      ctx3.moveTo(40, a + d);
+      ctx3.lineTo(50, a + d);
+      ctx3.stroke();
+
+      comulatedFrequancy -= counts[key];
+      prev_x = W_width3 - 100 - index * step - 0.5 * step;
+      prev_y = a + d;
+    });
 }
 
 median(data);
 drawBoxChart(data);
 statisticsInterpretation();
 drawColumnChart(data);
+drawComulatedFrequenciesChart(data);
