@@ -1,4 +1,7 @@
 {
   "title": "Memory Game",
-  "intro": "Statistics help us understand our data."
+  "intro": "Statistics help us understand our data.",
+  "level": "Level:",
+  "start": "Start",
+  "about": "About project"
 }

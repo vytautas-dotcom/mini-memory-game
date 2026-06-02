@@ -63,15 +63,13 @@
 
       <a class="menu-item" href="myStatistics.html">Mano statistika</a>
 
-      <a class="menu-item" href="top10.html">TOP 10</a>
+      <a class="menu-item" href="top10.html">TOP</a>
 
       <a class="menu-item" href="statistics.html">Bendra statistika</a>
 
     </div>
 
     <div id="gameStartedScreen">
-      <button id="ltBtn">LT</button>
-<button id="enBtn">EN</button>
       <h1 data-i18n="title">
         Atminties žaidimas
         <span id="myRank"></span>
@@ -79,21 +77,36 @@
 
       <canvas id="timeCanvas"></canvas>
 
-      <p>Lygis: <span id="level"></span></p>
+      <p data-i18n="level">
+        Lygis:
+        <span id="level"></span>
+      </p>
 
       <div id="numberBox" class="number-box"></div>
 
       <input id="answerInput" type="text" placeholder="Įrašyki skaičius" autocomplete="off"
         style="border-radius: 10px" />
 
-      <button id="checkBtn" class="btnStyle">PRADĖTI</button>
+      <button id="checkBtn" class="btnStyle" data-i18n="start">PRADĖTI</button>
 
       <p style="height: 2rem" id="message1"></p>
       <p style="height: 2rem" id="message2"></p>
     </div>
 
     <footer class="footer">
-      <a class="footer-btn" href="about.html">Apie projektą</a>
+      <a class="footer-btn" href="about.html" data-i18n="about">Apie projektą</a>
+
+      <div style="display: flex; justify-content: center; align-items: center;">
+
+        <div>
+          <button id="ltBtn" class="lang-btn">
+            <img src="assets/lt.svg" alt="🇱🇹">
+          </button>
+          <button id="enBtn" class="lang-btn">
+            <img src="assets/gb.svg" alt="🇬🇧">
+          </button>
+        </div>
+      </div>
 
       <div class="social-links">
         <a class="footer-btn" href="https://www.youtube.com/@MateMemo-team" target="_blank">

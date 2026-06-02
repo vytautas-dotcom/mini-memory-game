@@ -147,8 +147,6 @@ body {
   background: #f9d6ae;
 }
 
-
-
 #myRank {
   display: inline-block;
   margin-left: 10px;
@@ -367,6 +365,7 @@ button {
 .social-links {
   display: flex;
   gap: 16px;
+
 }
 
 @media (max-width: 600px) {
@@ -382,11 +381,26 @@ button {
 
  .footer-btn {
   text-decoration: none;
-    color: rgb(70, 72, 121);
-    font-weight: 600;
+  color: rgb(70, 72, 121);
+  font-weight: 600;
    cursor: pointer;
  }
 
  .footer-btn:hover {
    border-bottom: 1px solid rgb(70, 72, 121);
+ }
+
+ .lang-btn {
+   background: none;
+   border: none;
+   cursor: pointer;
+   padding: 4px;
+   margin-bottom: 1rem;
+ }
+
+ .lang-btn img {
+   width: 28px;
+   height: auto;
+   border-radius: 4px;
+   display: block;
  }

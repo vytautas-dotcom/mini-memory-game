@@ -1,4 +1,7 @@
 {
   "title": "Atminties žaidimas",
-  "intro": "Statistika padeda suprasti mūsų duomenis."
+  "intro": "Statistika padeda suprasti mūsų duomenis.",
+  "level": "Lygis:",
+  "start": "Pradėti",
+  "about": "Apie projektą"
 }
