@@ -349,3 +349,44 @@ button {
   margin-bottom:20px;
   border-radius:20px;
 }
+
+.footer {
+  margin-top: 40px;
+  padding: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  border-top: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.social-links {
+  display: flex;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+
+ .footer-btn {
+  text-decoration: none;
+    color: rgb(70, 72, 121);
+    font-weight: 600;
+   cursor: pointer;
+ }
+
+ .footer-btn:hover {
+   border-bottom: 1px solid rgb(70, 72, 121);
+ }

@@ -53,45 +53,57 @@
     </svg>
   </div>
 
-  <div id="nicknameScreen">
-    <input id="nicknameInput" maxlength="12" placeholder="Vardas" />
-    <button id="saveNameBtn">Eiti į žaidimą</button>
-  </div>
+  <div style="max-width: 700px; margin: 20px 2rem">
+    <div class="title">
+      <a class="footer-btn" href="/">Atgal</a>
+      <h1>Apie projektą</h1>
+    </div>
 
-  <div id="gameScreen" style="display: none">
-    <div class="menu">
+    <div>
+      <h2>Vasaros atminties iššūkis</h2>
+      <p>Norime pasidžiaugti ir su pasididžiavimu pristatyti šiais mokslo metais vykdytų STEAM veiklų rezultatą. Kartu
+        su mokiniais leidomės į kelionę, kurioje matematika tapo ne tik skaičiais ir formulėmis, bet ir būdu tyrinėti
+        pasaulį.</p>
 
-      <a class="menu-item" href="myStatistics.html">Mano statistika</a>
+      <p>Mokiniai kūrė trumpąją atmintį lavinančią internetinę svetainę, todėl mokėsi ne tik matematikos, bet ir
+        programavimo, kūrybiško problemų sprendimo bei duomenų analizės. Tačiau bene svarbiausia šio projekto dalis buvo
+        suvokimas, kad jų kuriamas darbas turės tikrą paskirtį.</p>
 
-      <a class="menu-item" href="top10.html">TOP 10</a>
+      <p>
+        Mokiniai žinojo, kad jų sukurtą įrankį naudos realūs žmonės – draugai, tėvai, mokytojai ir visi, kurie nuspręs
+        priimti šį iššūkį.
+        Būtent todėl jie dirbo su ypatingu užsidegimu, atsakomybe ir motyvacija. Kiekviena idėja, kiekvienas
+        patobulinimas ir kiekviena ištaisyta klaida turėjo prasmę, nes projektas buvo kuriamas ne pažymiui, o žmonėms.
+      </p>
 
-      <a class="menu-item" href="statistics.html">Bendra statistika</a>
+      <h3>O kas yra atminties talpa?</h3>
+
+      <p>Ar kada nors teko skaityti uždavinį ir jo pabaigoje nebeprisiminti pradžios? O gal skaitant ilgesnį tekstą
+        pajusti, kad informacijos vienu metu tiesiog per daug?</p>
+
+      <p>Viena iš priežasčių gali būti darbinės atminties talpa – mūsų gebėjimas vienu metu išlaikyti ir apdoroti
+        informaciją. Kuo ji didesnė, tuo lengviau mokytis, suprasti sudėtingesnius tekstus, spręsti uždavinius ir
+        susidoroti su
+        naujais iššūkiais.</p>
+
+      <p>Gera žinia – šį gebėjimą galima lavinti. Todėl kviečiame prisijungti prie vasaros atminties iššūkio.
+        Išbandykite
+        mokinių
+        sukurtą žaidimą, pasitikrinkite savo rezultatą, stebėkite pažangą ir palyginkite savo duomenis su kitų dalyvių
+        rezultatais.</p>
+
+      <p>Jūsų dalyvavimas ne tik padės lavinti atmintį. Kiekvienas atliktas bandymas taps prasmingu mokinių darbo
+        įvertinimu ir
+        parodys jiems, kad jų sukurtas projektas iš tiesų yra naudingas kitiems.
+        Galbūt vos kelios minutės per dieną padės atrasti, kad mūsų smegenys geba daugiau, nei dažnai manome.</p>
+
+      <p>Kviečiame priimti iššūkį, dalintis rezultatais ir kartu pažiūrėti, kiek galime patobulėti per šią vasarą!</p>
 
     </div>
 
-    <div id="gameStartedScreen">
-      <h1>
-        Atminties žaidimas
-        <span id="myRank"></span>
-      </h1>
-
-      <canvas id="timeCanvas"></canvas>
-
-      <p>Lygis: <span id="level"></span></p>
-
-      <div id="numberBox" class="number-box"></div>
-
-      <input id="answerInput" type="text" placeholder="Įrašyki skaičius" autocomplete="off"
-        style="border-radius: 10px" />
-
-      <button id="checkBtn" class="btnStyle">PRADĖTI</button>
-
-      <p style="height: 2rem" id="message1"></p>
-      <p style="height: 2rem" id="message2"></p>
-    </div>
 
     <footer class="footer">
-      <a class="footer-btn" href="about.html">Apie projektą</a>
+      <a class="footer-btn" href="/">Eiti į žaidimą</a>
 
       <div class="social-links">
         <a class="footer-btn" href="https://www.youtube.com/@MateMemo-team" target="_blank">
@@ -102,8 +114,12 @@
           Facebook
         </a>
       </div>
-    </footer>
 
+
+    </footer>
+    <p style="font-weight: 400; letter-spacing: 0.5px; color: #464879">Projektą parengė matememo mokiniai,
+      pataisymus atliko matememo
+      mentoriai. 2026</p>
   </div>
 
   <script type="module" src="script.js"></script>

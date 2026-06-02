@@ -12,7 +12,7 @@ const statLabel3 = document.getElementById("stat-label-3");
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const W_width = window.innerWidth * 0.9;
+const W_width = window.innerWidth * 0.8;
 const W_height = window.innerHeight * 0.3;
 canvas.width = W_width;
 canvas.height = W_height;
@@ -21,7 +21,7 @@ canvas.style.height = `${W_height}px`;
 
 const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d");
-const W_width2 = window.innerWidth * 0.9;
+const W_width2 = window.innerWidth * 0.8;
 const W_height2 = window.innerHeight * 0.5;
 canvas2.width = W_width2;
 canvas2.height = W_height2;
@@ -269,10 +269,10 @@ function drawColumnChart(values) {
   ctx2.stroke();
 
   ctx2.fillStyle = "blue";
-    ctx2.font = "14px Arial";
-    ctx2.fillText("Santykinis", 10, W_height2 * 0.08);
-    ctx2.fillText("dažnis", 10, W_height2 * 0.13);
-    ctx2.fillText("Rezultatas", W_width2 - 70, W_height2 - 20);
+  ctx2.font = "14px Arial";
+  ctx2.fillText("Santykinis", 10, W_height2 * 0.08);
+  ctx2.fillText("dažnis", 10, W_height2 * 0.13);
+  ctx2.fillText("Rezultatas", W_width2 - 75, W_height2 - 20);
 
   const actualWidth = W_width2 - 145;
   const step = actualWidth / Object.keys(counts).length;
