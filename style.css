@@ -155,10 +155,12 @@ body {
 }
 
 #gameScreen {
+  box-sizing: border-box;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
   padding: 30px 1rem;
   /* width: 400px; */
+  margin: 1rem;
   text-align: center;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -249,7 +251,7 @@ button {
   background: white;
   padding: 10px;
   margin: 0 10px;
-  width: 50%;
+  width: 30%;
 
   border: none;
   border-radius: 10px;
@@ -340,10 +342,11 @@ button {
 }
 
 #timeCanvas{
-  width:100%;
-  max-width:500px;
+  max-width:300px;
+  width: 90%;
   height:26px;
   display:block;
+  margin: 0 auto;
   margin-bottom:20px;
   border-radius:20px;
 }
